@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head') %>
+<body>
+    <%- include('partials/header') %>
+    <h2>Registrierung</h2>
+    <% if (errorMessage) { %>
+        <p style="color: red;"><%= errorMessage %></p>
+    <% } %>
+
+    <% if (erfolgMessage) { %>
+        <p style="color: rgb(7, 125, 74);"><%= erfolgMessage %></p>
+    <% } %>
+
+    <form action="/register" method="POST">
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required><br><br>
+ 
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+ 
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+ 
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="confirmPassword">Passwort bestätigen:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+ 
+        <button type="submit">Registrieren</button>
+    </form>
+    <%- include('partials/footer') %>
+</body>
+</html>
