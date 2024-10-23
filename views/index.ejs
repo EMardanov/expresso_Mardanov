@@ -5,8 +5,20 @@
 </head>
 <body>
   <%- include('partials/header') %>
+
   <h2>Willkommen auf der Startseite</h2>
-  <p><%= message %></p>
+    <p><%= locals.message ? message: '' %></p>
+ 
+    <% if (locals.user) { %>
+        <p>Hallo <%= user.name %>, Sie sind eingeloggt.</p>
+        <p>Email: <%= user.email %></p>
+        <form action="/logout" method="POST">
+            <button type="submit">Abmelden</button>
+        </form>
+    <% } else { %>
+    <p>Sie sind nicht eingeloggt. <a href="/login">Login</a> oder <a href="/register">Registrieren</a></p>
+    <% } %>
+
   <%- include('partials/footer') %>
 </body>
 </html>
