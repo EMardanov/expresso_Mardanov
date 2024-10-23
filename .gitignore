@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+project_db.sql
+test.sql
+public/images/my_image.png
