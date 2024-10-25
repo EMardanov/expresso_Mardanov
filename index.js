@@ -17,6 +17,17 @@ app.use(express.urlencoded({ extended: true }));
 // Cookie-Parser-Middleware verwenden
 app.use(cookieParser());
 
+function isValidPassword(password){
+  const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])/;
+  if(password.length < 8) {
+    return false;
+  }
+  if(!regex.test(password)) {
+    return false;
+  }
+  return true;
+};
+
 app.get('/', (req, res) => {
   const token = req.cookies['token'];
   let loggedInUser = false;
@@ -66,7 +77,11 @@ app.post('/register', async (req, res) => {
   const { username, name, email, password, confirmPassword } = req.body; // Hier wird confirmPassword ausgelesen
 
   if (password !== confirmPassword) {
-    return res.status(400).render('register', { title: 'Registrierung', errorMessage: 'Die Passwörter stimmen nicht überein.', erfolgMessage: null,     });
+    return res.status(400).render('register', { title: 'Registrierung', errorMessage: 'Die Passwörter stimmen nicht überein.', erfolgMessage: null});
+  }
+
+  if(!isValidPassword(password)){
+    return res.status(400).render('register', { title: 'Registrierung', errorMessage: 'Passwort muss mindestens 8 Zeichen, eine Zahl und ein Sonderzeichen enthalten.', erfolgMessage: null});
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -118,9 +133,7 @@ app.post('/login', async (req, res) => {
   if (!isMatch) {
     return res.status(403).render('login', { title: 'Login', error: 'Falsches Passwort'});
   }
-  const token = jwt.sign({ username: user[0].username, name: user[0].name, email: user[0].email },
-                           secrets.jwt_secret_key,
-                           { expiresIn: '1h' });
+  const token = jwt.sign( {id: user[0].id, email: user[0].email} ,  secrets.jwt_secret_key, { expiresIn: '1h' });
   res.cookie('token', token, { httpOnly: true }).redirect('/');
 });
 
