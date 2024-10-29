@@ -4,8 +4,15 @@
         <a href="/">Home</a>
         <a href="/about">Über uns</a>
         <a href="/contact">Kontakt</a>
-        <a href="/register">Registrierung</a>
-        <a href="/login">Login</a>
+        <% if (!locals.user) { %>
+            <a href="/register">Registrierung</a>
+        <% } %>
+        <% if (!locals.user) { %>
+            <a href="/login">Login</a>
+        <% } %>        
+        <% if (locals.user) { %>
+            <a href="/dashboard">Dashboard</a>
+        <% } %>
     </nav>
 </header>
 <hr>

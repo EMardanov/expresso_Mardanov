@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head') %>
+<body>
+    <%- include('partials/header') %>
+
+    <h2>Willkommen im Nutzerbereich <%= user.name %>!</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <img src="https://img.freepik.com/free-vector/orange-blue-background-list_23-2149020601.jpg?semt=ais_hybrid" />
+            </div>
+            <div class="col-6">
+                <form id="todo-form">
+                    <div class="form-group">
+                        <input type="text" id="todo-input" class="form-control"
+                                placeholder="Neue Aufgabe hinzufügen">
+                        <input type="hidden" id="user-id" name="user-id" value="<%= user.id %>">
+                        <button type="submit" class="btn btn-primary">Hinzufügen</button>
+                    </div>
+                </form>
+                <ul id="todo-list">
+                    <!-- Unordered list to dynamically add todo list items. -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+<script src="/js/todo.js"></script>
